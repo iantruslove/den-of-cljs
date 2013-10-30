@@ -12,12 +12,12 @@
                  [ring "1.1.8"]
                  [ring-middleware-format "0.3.0"]
                  [ring/ring-json "0.2.0"]
-                 [prismatic/dommy "0.1.1"]
+                 [enlive "1.1.4"]
 
                  ;; CLJS:
                  [org.clojure/clojurescript "0.0-1889"]
                  [cljsbuild "0.3.4"]
-                 [domina "1.0.2"]
+                 [prismatic/dommy "0.1.1"]
                  [enfocus "2.0.0"]]
 
   :profiles {:dev {:source-paths ["dev"]

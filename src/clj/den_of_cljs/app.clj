@@ -4,11 +4,18 @@
             [compojure.route :refer [resources not-found]]
             [ring.util.response :as resp]
             [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
-            [clojure.java.io]))
+            [net.cgrand.enlive-html :as enlive]
+            [clojure.java.io :as io]
+            [cemerick.austin.repls :refer [browser-connected-repl-js]]))
 
+(enlive/deftemplate page
+  (io/resource "public/index.html")
+  []
+  [:body] (enlive/append
+           (enlive/html [:script (browser-connected-repl-js)])))
 
 (defn _get-bike-rack-geojson []
-  (slurp (clojure.java.io/resource "data/bike_racks.geojson")))
+  (slurp (io/resource "data/bike_racks.geojson")))
 
 (def get-bike-rack-geojson (memoize _get-bike-rack-geojson))
 
@@ -19,7 +26,7 @@
   (context "/api" [] (-> api-routes
                          (wrap-json-response)
                          (wrap-json-body {:keywords? true})))
-  (GET "/" [] (resp/resource-response "index.html" {:root "public"}))
+  (GET "/" [] (resp/response (page)))
   (resources "/")
   (not-found "<p>404 - page not found</p>\n"))
 

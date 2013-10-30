@@ -35,3 +35,13 @@
 (defn restart []
   (stop)
   (refresh :after 'user/go))
+
+
+(def cljs-project-repl "Fire up a phantomjs-based ClojureScript REPL"
+  cemerick.austin.repls/exec)
+
+(defn cljs-project-chrome-repl
+  "Fire up a Chrome-based ClojureScript REPL"
+  []
+  (cljs-project-repl
+   :exec-cmds ["open" "-ga" "/Applications/Google Chrome.app"]))

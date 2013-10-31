@@ -32,8 +32,9 @@
 
   :cljsbuild {:builds
               {:dev {:source-paths ["src/cljs/den_of_cljs"]
-                     :compiler {:optimizations :whitespace
-                                :pretty-print false
+                     :compiler {:optimizations :whitespace ;; :advanced
+                                :pretty-print true
+                                :externs ["resources/public/lib/leaflet-externs.js"]
                                 :output-dir "resources/public/js/files"
                                 :output-to "resources/public/js/app.js"
                                 ;; TODO: Get source maps working

@@ -5,6 +5,7 @@ The outline of a Clojure/ClojureScript web app stack, with support for a nREPL-e
 ## Prerequisites
 
 * Leiningen 2
+* PhantomJS (optional)
 
 ## Usage
 
@@ -20,27 +21,28 @@ The outline of a Clojure/ClojureScript web app stack, with support for a nREPL-e
 * Compile resources and start webserver with `(start)`
 * Shut down the webserver with `(stop)`
 
-### Client (cljs)
+### ClojureScript client with headless REPL
 
 Run the server part, e.g. `lein ring server`, or like above.
 
 One way to do client-side work is to edit the .cljs files and run
-`lein cljsbuild auto` to monitor the .cljs source files and autocompile the JavaScript.
+`lein trampoline cljsbuild auto` to monitor the .cljs source files and autocompile the JavaScript.
 Browser refreshes are necessary.
 
-Another way is to live-update the code in the browser using a combination of
-the clojurescript browser repl, and piggieback or nREPL integration.
+For a PhantomJS-based headless ClojureScript REPL, start a nREPL and run `(cljs-project-repl)` - it's defined in the `user` namespace so it should work as soon as the nPREL is connected.
 
-For a browser repl:
-* Fire up another nREPL in emacs
-* Into nREPL, enter:
-    (require 'cljs.repl.browser)
-    (cemerick.piggieback/cljs-repl :repl-env (cljs.repl.browser/repl-env :port 9000))
-* Load http://localhost:8000 (or wherever the server part was fired up). The ClojureScript browser REPL should connect to nREPL via port 9000
-  * To verify an active CLJS REPL, open up the browser console and
-    look for a pending POST request to http://localhost:9000/ -
-    this is the connection back to nREPL.
-  * With this in hand, entering `(.alert js/window "Hello, World")` into the REPL should do what you expect.
+For the same but using Chrome, run `(cljs-project-chrome-repl)` on OSX.
+
+### ClojureScript client with in-browser REPL
+
+Another way is to live-update the code in the browser using Austin's nREPL integration.
+This requires a few different steps, including running the webserver from the REPL.
+
+* Fire up a nREPL in emacs
+* Run the server part of the app - `(go)` does both `(init)` and `(start)`
+* Start the ClojureScript nPREL with `(cljs-browser-repl)`
+* Load the app in the browser (e.g. visit http://localhost:8000/)
+* Verify the ClojureScript REPL is connected by typing in `(.alert js/window "Hello, World")`
 
 ## TODO
 

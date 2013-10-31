@@ -44,7 +44,22 @@ This requires a few different steps, including running the webserver from the RE
 * Load the app in the browser (e.g. visit http://localhost:8000/)
 * Verify the ClojureScript REPL is connected by typing in `(.alert js/window "Hello, World")`
 
-## TODO
+## Outline of walkthrough steps
+
+1. Basic setup and the ClojureScript REPL
+2. Compiling to JS and loading the first page
+3. Externs and a simple Leaflet map
+4. Testing ClojureScript
+5. ClojureScript MVC/MVP + event hub pattern for a SPWA
+6. Basic DOM manipulation
+7. Events
+8. AJAX
+9. Deployment to Heroku
+10. Remote debugging (and hot fixes?)
+
+## References
+
+* http://lukevanderhart.com/2011/09/30/using-javascript-and-clojurescript.html
 
 ## License
 

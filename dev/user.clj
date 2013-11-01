@@ -37,7 +37,8 @@
   (refresh :after 'user/go))
 
 
-(def cljs-project-repl "Fire up a phantomjs-based ClojureScript REPL"
+(def cljs-project-repl
+  "Fire up a phantomjs-based ClojureScript REPL"
   cemerick.austin.repls/exec)
 
 (defn cljs-project-chrome-repl
@@ -45,3 +46,10 @@
   []
   (cljs-project-repl
    :exec-cmds ["open" "-ga" "/Applications/Google Chrome.app"]))
+
+(defn cljs-browser-repl
+  "Fire up a browser-connected ClojureScript REPL"
+  []
+  (let [repl-env (reset! cemerick.austin.repls/browser-repl-env
+                         (cemerick.austin/repl-env))]
+    (cemerick.austin.repls/cljs-repl repl-env)))

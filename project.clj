@@ -17,6 +17,7 @@
                  ;; CLJS:
                  [org.clojure/clojurescript "0.0-1889"]
                  [cljsbuild "0.3.4"]
+                 [jayq "2.5.0"]
                  [prismatic/dommy "0.1.1"]
                  [enfocus "2.0.0"]]
 

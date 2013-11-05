@@ -8,3 +8,6 @@ L.map.setView;
 
 L.tileLayer;
 L.TileLayer;
+
+L.geoJson;
+L.GeoJson;

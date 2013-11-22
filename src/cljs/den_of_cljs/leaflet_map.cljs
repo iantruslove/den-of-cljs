@@ -1,7 +1,6 @@
 (ns den-of-cljs.leaflet-map
   (:require [jayq.core])
-  (:require-macros [jayq.macros :refer [let-ajax]])
-  )
+  (:require-macros [jayq.macros :refer [let-ajax]]))
 
 (def lat-lon-downtown [39.75 -104.99])
 
@@ -33,12 +32,17 @@
 (defn create-geosjon-layer [geojson-str]
   (.geoJson js/L (.parse js/JSON geojson-str)))
 
-(defn leaflet-add-layer [leaflet-map layer]
+(defn add-layer-to-map! [leaflet-map layer]
   (.addLayer leaflet-map layer))
 
 (defn retrieve-bike-racks [handler]
   (let-ajax [geojson {:url "/api/bike_racks/"}]
             (handler geojson)))
+
+(defn add-bike-rack-layer! [leaflet-map]
+  (retrieve-bike-racks (fn [geojson]
+                         (add-layer-to-map! leaflet-map (create-geosjon-layer geojson)))))
+
 
 (def the-map (atom {}))
 
@@ -47,9 +51,7 @@
 
 (defn start! []
   (swap! the-map start-map)
-  (retrieve-bike-racks (fn [geojson]
-                         (let [leaflet-map (:leaflet-map @the-map)]
-                           (leaflet-add-layer leaflet-map (create-geosjon-layer geojson))))))
+  (add-bike-rack-layer! (:leaflet-map @the-map)))
 
 (defn stop! []
   (swap! the-map stop-map))

@@ -42,14 +42,14 @@
 
 (def the-map (atom {}))
 
-(defn init []
+(defn init! []
   (reset! the-map initial-map-config))
 
-(defn start []
+(defn start! []
   (swap! the-map start-map)
   (retrieve-bike-racks (fn [geojson]
                          (let [leaflet-map (:leaflet-map @the-map)]
                            (leaflet-add-layer leaflet-map (create-geosjon-layer geojson))))))
 
-(defn stop [] 
+(defn stop! []
   (swap! the-map stop-map))

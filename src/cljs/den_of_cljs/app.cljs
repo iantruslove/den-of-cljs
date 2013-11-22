@@ -3,6 +3,5 @@
               [den-of-cljs.leaflet-map :as leaflet-map]))
 
 (defn ^:export home_init []
-  (leaflet-map/init)
-  (leaflet-map/start)
-  )
+  (leaflet-map/init!)
+  (leaflet-map/start!))

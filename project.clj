@@ -9,7 +9,7 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/data.json "0.2.2"]
                  [compojure "1.1.5"]
-                 [ring "1.1.8"]
+                 [ring "1.2.1"]
                  [ring-middleware-format "0.3.0"]
                  [ring/ring-json "0.2.0"]
                  [enlive "1.1.4"]

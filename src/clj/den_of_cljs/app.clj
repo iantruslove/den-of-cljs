@@ -14,13 +14,11 @@
   [:body] (enlive/append
            (enlive/html [:script (browser-connected-repl-js)])))
 
-(defn _get-bike-rack-geojson []
+(defonce bike-racks-geojson
   (slurp (io/resource "data/bike_racks.geojson")))
 
-(def get-bike-rack-geojson (memoize _get-bike-rack-geojson))
-
 (defroutes api-routes
-  (GET "/bike_racks/" [] (resp/response (get-bike-rack-geojson))))
+  (GET "/bike_racks/" [] (resp/response bike-racks-geojson)))
 
 (defroutes app-routes
   (context "/api" [] (-> api-routes

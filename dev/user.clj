@@ -36,7 +36,6 @@
   (stop)
   (refresh :after 'user/go))
 
-
 (def cljs-project-repl
   "Fire up a phantomjs-based ClojureScript REPL"
   cemerick.austin.repls/exec)

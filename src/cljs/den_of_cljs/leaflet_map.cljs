@@ -4,11 +4,12 @@
 
 (def lat-lon-downtown [39.75 -104.99])
 
-(def initial-map-config {:element-id "map"
-                         :center lat-lon-downtown
-                         :initial-zoom 15
-                         :base-layer-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                         :state :initialized})
+(def initial-map-config
+  {:element-id "map"
+   :center lat-lon-downtown
+   :initial-zoom 15
+   :base-layer-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+   :state :initialized})
 
 (defn start-map [map-config]
   (let [leaflet-map (L.Map. (:element-id map-config))
@@ -40,9 +41,9 @@
             (handler geojson)))
 
 (defn add-bike-rack-layer! [leaflet-map]
-  (retrieve-bike-racks (fn [geojson]
-                         (add-layer-to-map! leaflet-map (create-geosjon-layer geojson)))))
-
+  (retrieve-bike-racks
+   (fn [geojson]
+     (add-layer-to-map! leaflet-map (create-geosjon-layer geojson)))))
 
 (def the-map (atom {}))
 

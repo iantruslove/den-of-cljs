@@ -12,15 +12,15 @@
            webserver (den-of-cljs.webserver/init (Integer. port) app)]
        {:state :initialized
         :webserver webserver}))
-  ([]      ;; default "constructor" on port 8080 
+  ([]      ;; default "constructor" on port 8080
      (init 8000)))
 
 (defn start-webserver [system]
-  (assoc system :webserver 
+  (assoc system :webserver
          (den-of-cljs.webserver/start (:webserver system))))
 
 (defn stop-webserver [system]
-  (assoc system :webserver 
+  (assoc system :webserver
          (den-of-cljs.webserver/stop (:webserver system))))
 
 (defn compile-clojurescript [system]

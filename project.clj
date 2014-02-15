@@ -4,41 +4,33 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :source-paths ["src/clj"]
+  :source-paths ["src/clj" "src/cljs"]
 
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/data.json "0.2.2"]
                  [compojure "1.1.5"]
                  [ring "1.2.1"]
-                 [ring-middleware-format "0.3.0"]
                  [ring/ring-json "0.2.0"]
-                 [enlive "1.1.4"]
+                 [enlive "1.1.5"]
 
                  ;; CLJS:
-                 [org.clojure/clojurescript "0.0-1889"]
-                 [cljsbuild "0.3.4"]
+                 [org.clojure/clojurescript "0.0-2138"]
                  [jayq "2.5.0"]
-                 [prismatic/dommy "0.1.1"]
-                 [enfocus "2.0.0"]]
+                 [prismatic/dommy "0.1.2"]
+                 [enfocus "2.0.2"]
+                 ]
 
-  :profiles {:dev {:source-paths ["dev"]
+  :profiles {:dev {:repl-options {:init-ns den-of-cljs.system}
                    :dependencies [[org.clojure/tools.namespace "0.2.3"]]
-                   :plugins [[com.cemerick/austin "0.1.1"]]}}
+                   :plugins [[com.cemerick/austin "0.1.3"]
+                             [lein-ring "0.8.5"]
+                             [lein-cljsbuild "1.0.1"]]
+                   :cljsbuild {:builds [{:source-paths ["src/cljs"]
+                                         :compiler {:optimizations :whitespace ;; :advanced
+                                                    :pretty-print true
+                                                    :externs ["resources/public/lib/leaflet-externs.js"]
+                                                    :output-dir "resources/public/js/files"
+                                                    :output-to "resources/public/js/app.js"
+                                                    :source-map "resources/public/js/app.js.map"}}]}}}
 
-  :ring {:handler den-of-cljs.app/app
-         :port 8000}
-
-  :plugins [[lein-ring "0.8.5"]
-            [lein-cljsbuild "0.3.4"]]
-
-  :cljsbuild {:builds
-              {:dev {:source-paths ["src/cljs/den_of_cljs"]
-                     :compiler {:optimizations :whitespace ;; :advanced
-                                :pretty-print true
-                                :externs ["resources/public/lib/leaflet-externs.js"]
-                                :output-dir "resources/public/js/files"
-                                :output-to "resources/public/js/app.js"
-                                ;; TODO: Get source maps working
-                                ;;:source-map "app.js.map"
-                                }}}}
-  )
+  :ring {:handler den-of-cljs.app/app :port 8000})

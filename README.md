@@ -1,6 +1,7 @@
 # den-of-cljs
 
-The outline of a Clojure/ClojureScript web app stack, with support for a nREPL-enabled ClojureScript browser REPL.
+The outline of a Clojure/ClojureScript web app stack, with support for
+a nREPL-enabled ClojureScript browser REPL.
 
 ## Prerequisites
 
@@ -17,9 +18,7 @@ The outline of a Clojure/ClojureScript web app stack, with support for a nREPL-e
 (These steps are what the second invocation above does internally)
 
 * Fire up a `lein repl` in the project root
-* Initialize the app with `(init)`
-* Compile resources and start webserver with `(start)`
-* Shut down the webserver with `(stop)`
+* Compile resources and start webserver with `(-main)`
 
 ### ClojureScript client with headless REPL
 
@@ -29,7 +28,10 @@ One way to do client-side work is to edit the .cljs files and run
 `lein trampoline cljsbuild auto` to monitor the .cljs source files and autocompile the JavaScript.
 Browser refreshes are necessary.
 
-For a PhantomJS-based headless ClojureScript REPL, start a nREPL and run `(cljs-project-repl)` - it's defined in the `user` namespace so it should work as soon as the nPREL is connected.
+For a PhantomJS-based headless ClojureScript REPL, start a nREPL and
+run `(cljs-project-repl)` - it's defined in the startup
+`den-of-cljs.system` namespace so it should work as soon as the nPREL
+is connected.
 
 For the same but using Chrome, run `(cljs-project-chrome-repl)` on OSX.
 
@@ -39,7 +41,7 @@ Another way is to live-update the code in the browser using Austin's nREPL integ
 This requires a few different steps, including running the webserver from the REPL.
 
 * Fire up a nREPL in emacs
-* Run the server part of the app - `(go)` does both `(init)` and `(start)`
+* Run the server part of the app - `(-main)`
 * Start the ClojureScript nREPL with `(cljs-browser-repl)`
 * Load the app in the browser (e.g. visit http://localhost:8000/)
 * Verify the ClojureScript REPL is connected by typing in `(.alert js/window "Hello, World")`
@@ -51,7 +53,7 @@ Edit and repl Clojure and ClojureScript at the same time?  A little trickier, bu
 Using cider mode:
 
 * `cider-jack-in` to jack in and open a REPL to use for CLJ
-* Run the server part: `(go)`
+* Run the server part: `(-main)`
 * Open a new cider connection to that same nREPL:
   * `cider-display-current-connection-info` to display host and port
     info, you might need the port number
@@ -92,6 +94,6 @@ advantage of the already-changed server.  Neato!
 
 ## License
 
-Copyright © 2013 Ian Truslove
+Copyright © 2013, 2014 Ian Truslove
 
 Distributed under the Eclipse Public License, the same as Clojure.

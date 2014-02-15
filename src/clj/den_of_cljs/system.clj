@@ -1,8 +1,8 @@
 (ns den-of-cljs.system
-  (:use ring.adapter.jetty)
-  (:require den-of-cljs.webserver)
-  (:require den-of-cljs.app)
-  (:require cljs.closure))
+  (:require cemerick.austin.repls
+            den-of-cljs.webserver
+            den-of-cljs.app
+            cljs.closure))
 
 ;;TODO: extract the jetty webserver out to a webserver object
 (defn init

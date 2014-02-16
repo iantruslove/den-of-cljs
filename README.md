@@ -11,7 +11,7 @@ a nREPL-enabled ClojureScript browser REPL.
 ## Usage
 
 * `lein ring server` runs the app without the system wrappers around the webserver and CLJS compile steps.
-* `lein run -m demographics.system 8080` runs the server app on port 8080, ensuring that CLJS is compiled.
+* `lein run -m den-of-cljs.system 8080` runs the server app on port 8080, ensuring that CLJS is compiled.
 
 ### Server (clj)
 

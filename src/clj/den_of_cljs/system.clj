@@ -7,13 +7,11 @@
 ;;TODO: extract the jetty webserver out to a webserver object
 (defn init
   "Returns a new instance of the whole application"
-  ([port]
-     (let [app #'den-of-cljs.app/app
-           webserver (den-of-cljs.webserver/init (Integer. port) app)]
-       {:state :initialized
-        :webserver webserver}))
-  ([]      ;; default "constructor" on port 8080
-     (init 8000)))
+  [port]
+  (let [app #'den-of-cljs.app/app
+        webserver (den-of-cljs.webserver/init (Integer. port) app)]
+    {:state :initialized
+     :webserver webserver}))
 
 (defn start-webserver [system]
   (assoc system :webserver
@@ -47,5 +45,26 @@
       (compile-clojurescript (stop-webserver system))
     :state :stopped))
 
-(defn -main [port]
-  (start (init port)))
+(def cljs-project-repl
+  "Fire up a phantomjs-based ClojureScript REPL"
+  cemerick.austin.repls/exec)
+
+(defn cljs-project-chrome-repl
+  "Fire up a Chrome-based ClojureScript REPL"
+  []
+  (cljs-project-repl
+   :exec-cmds ["open" "-ga" "/Applications/Google Chrome.app"]))
+
+(defn cljs-browser-repl
+  "Fire up a browser-connected ClojureScript REPL"
+  []
+  (let [repl-env (reset! cemerick.austin.repls/browser-repl-env
+                         (cemerick.austin/repl-env))]
+    (cemerick.austin.repls/cljs-repl repl-env)))
+
+(defn go! [port]
+  (defonce ^:private server
+    (start (init port))))
+
+(defn -main [& args]
+  (go! (or (first args) 8000)))

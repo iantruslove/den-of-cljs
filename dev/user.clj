@@ -1,3 +1,6 @@
+
+;; THIS ISN'T USED ANY MORE
+
 (ns user
   (:require [clojure.pprint :refer (pprint)]
             [clojure.repl :refer :all]

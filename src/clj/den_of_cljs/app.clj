@@ -1,5 +1,6 @@
 (ns den-of-cljs.app
-  (:require [compojure.core :refer [defroutes context GET]]
+  (:require [clojure.data.json :as json]
+            [compojure.core :refer [defroutes context GET]]
             [compojure.handler :as handler]
             [compojure.route :refer [resources not-found]]
             [ring.util.response :as resp]
@@ -14,11 +15,21 @@
   [:body] (enlive/append
            (enlive/html [:script (browser-connected-repl-js)])))
 
-(defonce bike-racks-geojson
+(defonce all-bike-racks-geojson
   (slurp (io/resource "data/bike_racks.geojson")))
 
+(defn take-n-features [geoedn n]
+  (assoc geoedn :features (vec (take n (:features geoedn)))))
+
+(defonce all-bike-racks-geoedn
+  (json/read-str all-bike-racks-geojson :key-fn keyword))
+
 (defroutes api-routes
-  (GET "/bike_racks/" [] (resp/response bike-racks-geojson)))
+  (GET "/bike_racks/" []
+    (-> all-bike-racks-geoedn
+         (take-n-features 1000)
+         json/write-str
+         resp/response)))
 
 (defroutes app-routes
   (context "/api" [] (-> api-routes

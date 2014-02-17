@@ -1,0 +1,3 @@
+Backbone = {};
+
+Backbone.Events;

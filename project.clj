@@ -28,7 +28,9 @@
                    :cljsbuild {:builds [{:source-paths ["src/cljs"]
                                          :compiler {:optimizations :whitespace ;; :advanced
                                                     :pretty-print true
-                                                    :externs ["resources/public/lib/leaflet-externs.js"]
+                                                    :externs ["resources/public/lib/leaflet-externs.js"
+                                                              "resources/public/lib/backbone-externs.js"
+                                                              "resources/public/lib/underscore-externs.js"]
                                                     :output-dir "resources/public/js/files"
                                                     :output-to "resources/public/js/app.js"
                                                     :source-map "resources/public/js/app.js.map"}}]}}}

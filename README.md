@@ -75,18 +75,11 @@ the client-side code, eval'd (in the appropriate REPL) and take
 advantage of the already-changed server.  Neato!
 
 
-## Outline of walkthrough steps
+## Presentation details
 
-1. Basic setup and the ClojureScript REPL
-2. Compiling to JS and loading the first page
-3. Externs and a simple Leaflet map
-4. Testing ClojureScript
-5. ClojureScript MVC/MVP + event hub pattern for a SPWA
-6. Basic DOM manipulation
-7. Events
-8. AJAX
-9. Deployment to Heroku
-10. Remote debugging (and hot fixes?)
+Shown at http://www.meetup.com/denofclojure/events/166510172/.
+
+Presentation notes at https://gist.github.com/9039452.
 
 ## References
 

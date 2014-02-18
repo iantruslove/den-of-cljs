@@ -1,4 +1,4 @@
-(ns den-of-cljs.app
+(ns den-of-cljs.js-app
   (:require [clojure.browser.repl]
             [den-of-cljs.leaflet-map :as leaflet-map]
             [jayq.core])
@@ -10,7 +10,7 @@
   (let-ajax [geojson {:url "/api/bike_racks/"}]
             (swap! model (fn [m] (assoc m :feature-geojson geojson)))))
 
-(defn ^:export home_init []
+(defn ^:export init []
   (leaflet-map/init! model)
   (leaflet-map/start!)
   (retrieve-geojson))

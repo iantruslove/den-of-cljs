@@ -1,10 +1,6 @@
-(ns den-of-cljs.leaflet-map
-  (:require [jayq.core])
-  (:require-macros [jayq.macros :refer [let-ajax]]))
+(ns den-of-cljs.leaflet-map)
 
 (def lat-lon-downtown [39.75 -104.99])
-
-(def the-map (atom {}))
 
 (def initial-map-config
   {:element-id "map"
@@ -12,6 +8,8 @@
    :initial-zoom 15
    :base-layer-url "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
    :state :initialized})
+
+(def the-map (atom {}))
 
 (defn start-map [map-config]
   (let [leaflet-map (L.Map. (:element-id map-config))
@@ -49,18 +47,19 @@
     (swap! the-map (fn [m] (assoc m :bike-rack-layer new-layer)))
     (add-layer-to-map leaflet-map new-layer)))
 
-(defn init! [model-atom]
-  (reset! the-map (assoc initial-map-config :model model-atom)))
-
 (defn on-model-change [key atom old new]
   (when-let [geojson (:feature-geojson new)]
     (update-bike-rack-layer! geojson)))
+
+(defn init! [model-atom]
+  (reset! the-map (assoc initial-map-config :model model-atom)))
 
 (defn start! []
   (swap! the-map start-map)
   (add-watch (:model @the-map) :leaflet-map-observer on-model-change))
 
 (defn stop! []
-  (swap! the-map stop-map))
+  (swap! the-map stop-map)
+  (remove-watch (:model @the-map) :leaflet-map-observer))
 
 (def restart! (comp start! stop!))

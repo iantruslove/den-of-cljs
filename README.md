@@ -52,7 +52,7 @@ Edit and repl Clojure and ClojureScript at the same time?  A little trickier, bu
 
 Using cider mode:
 
-* `cider-jack-in` to jack in and open a REPL to use for CLJ
+* `cider-jack-in` (`C-c M-j`) to jack in and open a REPL to use for CLJ
 * Run the server part: `(-main)`
 * Open a new cider connection to that same nREPL:
   * `cider-display-current-connection-info` to display host and port

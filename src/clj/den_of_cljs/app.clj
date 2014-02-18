@@ -18,18 +18,19 @@
 (defonce all-bike-racks-geojson
   (slurp (io/resource "data/bike_racks.geojson")))
 
-(defn take-n-features [geoedn n]
-  (assoc geoedn :features (vec (take n (:features geoedn)))))
-
-(defonce all-bike-racks-geoedn
+(defonce all-bike-racks
   (json/read-str all-bike-racks-geojson :key-fn keyword))
+
+(defn keep-n-features [feature-collection n]
+  (assoc feature-collection
+    :features (vec (take (Integer. n) (:features feature-collection)))))
 
 (defroutes api-routes
   (GET "/bike_racks/" []
-    (-> all-bike-racks-geoedn
-         (take-n-features 1000)
-         json/write-str
-         resp/response)))
+    (-> all-bike-racks
+        (keep-n-features 1000)
+        json/write-str
+        resp/response)))
 
 (defroutes app-routes
   (context "/api" [] (-> api-routes

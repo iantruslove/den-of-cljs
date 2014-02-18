@@ -4,7 +4,8 @@
             den-of-cljs.app
             cljs.closure))
 
-;;TODO: extract the jetty webserver out to a webserver object
+(defonce server (atom {}))
+
 (defn init
   "Returns a new instance of the whole application"
   [port]
@@ -33,8 +34,7 @@
   "Performs side effects to initialize a system, acquire resources, and start it running.
    Returns an updated instance of the app."
   [system]
-  (assoc
-      (compile-clojurescript (start-webserver system))
+  (assoc (compile-clojurescript (start-webserver system))
     :state :started))
 
 (defn stop
@@ -63,8 +63,10 @@
     (cemerick.austin.repls/cljs-repl repl-env)))
 
 (defn go! [port]
-  (defonce ^:private server
-    (start (init port))))
+  (reset! server (start (init port))))
+
+(defn restart! []
+  (swap! server (comp start stop)))
 
 (defn -main [& args]
   (go! (or (first args) 8000)))
